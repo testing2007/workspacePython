@@ -45,4 +45,5 @@ def foo(param1, param2):
     return res #单行注释
 
 if __name__ == '__main__':
+    print("main--")
     main()

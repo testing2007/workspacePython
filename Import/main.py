@@ -3,19 +3,23 @@
 # 方式二/三：
 from common import bHandleFinished
 
+# bHandleFinished = True
+# print("global value=", bHandleFinished)
+
 def modifyValue():
     # 方式一：
     # common.bHandleFinished = True
     # print("modify value=", common.bHandleFinished)
 
     # 方式二：
-    bHandleFinished = True
-    print("modify value=", bHandleFinished)
+    # bHandleFinished = True
+    # print("modify value=", bHandleFinished)
     
     # 方式三：
-    global bHandleFinished
+    # global bHandleFinished
     bHandleFinished = True
     print("modify value=", bHandleFinished)
+ 
 
 
 def fetchValue():

@@ -68,7 +68,7 @@ def main():
     print("main")
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind(("", 9982))
+    server_socket.bind(("", 9000))
     server_socket.listen(128)
 
     while(True):

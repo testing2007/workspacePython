@@ -6,7 +6,7 @@ import time
 
 def main():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect(("192.168.1.102", 9982))
+    client_socket.connect(("192.168.1.102", 9000))
 
     i = 0
     while(i<100):

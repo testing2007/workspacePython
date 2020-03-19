@@ -1,25 +1,10 @@
 import socket
 import struct
-import time
-import os
 import json
+from uploadFile.file_handler import FileHandler
 
-def getCurrentDir():
-    return os.getcwd();
 
-def getErrorImageDir():
-    error_image_dir = os.path.join(os.getcwd(), "recv_image")
-    if not os.path.exists(error_image_dir):
-        os.makedirs(error_image_dir)
-    return error_image_dir;
-
-def generateErrorImagePath( file_name):
-    # random_name = 'test_{}_{}'.format(time.strftime(
-    #     '%Y_%m_%d_%H_%M_%S'), random.randint(1, 999))
-    # report_name = f'{random_name}.html'
-    path_file = os.path.join(getErrorImageDir(), file_name)
-    return path_file
-    
+fileHanlder = FileHandler()
 def handle_request(new_socket):
     while True:
         try:
@@ -37,12 +22,7 @@ def handle_request(new_socket):
             if cmd == 'UPLOAD_SCREEN_SHOT':
                 file_size = head_dict['filesize']
                 file_name = head_dict['filename']
-                # recv_path = '/Users/zhiqiangwei/Documents/workspacePython/uploadFile/recv_image/'.format(file_name)
-
-                # file_path = os.path.normpath(
-                #     "/Users/zhiqiangwei/Documents/workspacePython/uploadFile/recv_image/")
-                # file_path = file_path + "/" + file_name
-                file_path = generateErrorImagePath(file_name)
+                file_path = fileHanlder.generateErrorImagePath(file_name)
                 print(file_path)
 
                 recv_size = 0
@@ -65,6 +45,8 @@ def handle_request(new_socket):
 
 
 def main():
+    fileHandlerObj = FileHandler()
+
     print("main")
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -85,4 +67,7 @@ def main():
 
 
 if __name__ == '__main__':
+    # main()
     main()
+    #print(FileHandler.getCurrentDir(self))
+    # handle_request()

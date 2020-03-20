@@ -1,10 +1,12 @@
 import socket
 import struct
 import json
-from uploadFile.file_handler import FileHandler
 
+# from uploadFile.file_handler import FileHandler
+import file_handler as fh
+import socket_config as cfg
+fh = fh.FileHandler()
 
-fileHanlder = FileHandler()
 def handle_request(new_socket):
     while True:
         try:
@@ -22,7 +24,7 @@ def handle_request(new_socket):
             if cmd == 'UPLOAD_SCREEN_SHOT':
                 file_size = head_dict['filesize']
                 file_name = head_dict['filename']
-                file_path = fileHanlder.generateErrorImagePath(file_name)
+                file_path = fh.generateErrorRecvImagePath(file_name)
                 print(file_path)
 
                 recv_size = 0
@@ -45,13 +47,11 @@ def handle_request(new_socket):
 
 
 def main():
-    fileHandlerObj = FileHandler()
-
     print("main")
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind(("", 9000))
-    server_socket.listen(128)
+    server_socket.bind((cfg.const.server_ip, cfg.const.server_port))
+    server_socket.listen(1024)
 
     while(True):
         # 阻塞等待
@@ -67,7 +67,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
     main()
-    #print(FileHandler.getCurrentDir(self))
-    # handle_request()

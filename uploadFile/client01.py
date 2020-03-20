@@ -4,14 +4,23 @@ import json
 import struct
 import time
 
+import file_handler as fh
+import socket_config as cfg
+fh = fh.FileHandler()
+
 def main():
+    # print(cfg.const.server_ip)
+    # return ;
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect(("47.93.202.254", 9000))
+    client_socket.connect((cfg.const.server_ip, cfg.const.server_port))
 
     i = 0
     while(i<100):
         i+=1
-        file_name = str.format("/Users/zhiqiangwei/Documents/workspacePython/uploadFile/image/%d.jpg" %(i))
+        
+        # file_name = str.format("/Users/zhiqiangwei/Documents/workspacePython/uploadFile/image/%d.jpg" %(i))
+        file_name = fh.generateErrorSendImagePath( str.format("%d.jpg" %(i)) )
+        print('file_name=%s' %(file_name))
         if( not os.path.isfile(file_name) ):
             print('file:%s is not exists' %file_name)
             break
@@ -36,6 +45,7 @@ def main():
         t1 = time.time()
         with open(file_name, 'rb') as f:
             while head_dic['filesize'] >= 2048:
+                # print("client read")
                 content = f.read(2048)
                 client_socket.send(content)
                 head_dic['filesize'] -= len(content)
